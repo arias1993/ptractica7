@@ -1,29 +1,15 @@
-name: Deploy GitHub Pages
-
-on:
-  push:
-    branches:
-      - main  # Asegúrate de usar la rama correcta
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Fork
-        uses: actions/checkout@v4
-
       - name: Mirror Repo to Public Repo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git remote add mirror https://github.com/arias1993/ptractica7.git
+          git remote add mirror https://github.com/arias1993/practica-7-insercion-audio-video.git
           git push --force mirror main
 
       - name: Enable GitHub Pages
         run: |
           curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" \
                -H "Accept: application/vnd.github.v3+json" \
-               https://api.github.com/repos/arias1993/ptractica7/pages \
+               https://api.github.com/repos/arias1993/practica-7-insercion-audio-video/pages \
                -d '{"source":{"branch":"main"}}'
